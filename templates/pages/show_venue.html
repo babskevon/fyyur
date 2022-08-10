@@ -1,4 +1,4 @@
-{% extends 'layouts/main.html' %}
+{% extends 'layouts/main.html' %}   
 {% block title %}Venue Search{% endblock %}
 {% block content %}
 <div class="row">
@@ -6,11 +6,12 @@
 		<h1 class="monospace">
 			{{ venue.name }}
 		</h1>
+				                             
 		<p class="subtitle">
 			ID: {{ venue.id }}
 		</p>
 		<div class="genres">
-			{% for genre in venue.genres %}
+			{% for genre in shows.genres %}
 			<span class="genre">{{ genre }}</span>
 			{% endfor %}
 		</div>
@@ -47,9 +48,9 @@
 	</div>
 </div>
 <section>
-	<h2 class="monospace">{{ venue.upcoming_shows_count }} Upcoming {% if venue.upcoming_shows_count == 1 %}Show{% else %}Shows{% endif %}</h2>
+	<h2 class="monospace">{{ shows.upcoming_shows_count }} Upcoming {% if shows.upcoming_shows_count == 1 %}Show{% else %}Shows{% endif %}</h2>
 	<div class="row">
-		{%for show in venue.upcoming_shows %}
+		{%for show in shows.upcoming_shows %}
 		<div class="col-sm-4">
 			<div class="tile tile-show">
 				<img src="{{ show.artist_image_link }}" alt="Show Artist Image" />
@@ -61,9 +62,9 @@
 	</div>
 </section>
 <section>
-	<h2 class="monospace">{{ venue.past_shows_count }} Past {% if venue.past_shows_count == 1 %}Show{% else %}Shows{% endif %}</h2>
+	<h2 class="monospace">{{ shows.past_shows_count }} Past {% if shows.past_shows_count == 1 %}Show{% else %}Shows{% endif %}</h2>
 	<div class="row">
-		{%for show in venue.past_shows %}
+		{%for show in shows.past_shows %}
 		<div class="col-sm-4">
 			<div class="tile tile-show">
 				<img src="{{ show.artist_image_link }}" alt="Show Artist Image" />
