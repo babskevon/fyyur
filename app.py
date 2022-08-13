@@ -286,8 +286,20 @@ def show_artist(artist_id):
 #  ----------------------------------------------------------------
 @app.route('/artists/<int:artist_id>/edit', methods=['GET'])
 def edit_artist(artist_id):
-  form = ArtistForm()
   artist=Artist.query.get(artist_id)
+  form = ArtistForm(
+    name=artist.name,
+    city=artist.city,
+    state=artist.state,
+    phone=artist.phone,
+    genres=artist.genres.split(','),
+    facebook_link=artist.facebook_link,
+    image_link=artist.image_link,
+    seeking_venue=artist.seeking_venues,
+    seeking_description=artist.seeking_description,
+    website_link=artist.website_link
+  )
+  
   # TODO: populate form with fields from artist with ID <artist_id>
   return render_template('forms/edit_artist.html', form=form, artist=artist)
 
@@ -327,9 +339,21 @@ def edit_artist_submission(artist_id):
 
 @app.route('/venues/<int:venue_id>/edit', methods=['GET'])
 def edit_venue(venue_id):
-  form = VenueForm()
   venue = Venue.query.get(venue_id)
   # TODO: populate form with values from venue with ID <venue_id>
+  form = VenueForm(
+    name=venue.name,
+    city=venue.city,
+    state=venue.state,
+    address=venue.address,
+    phone=venue.phone,
+    genres=venue.genres.split(','),
+    facebook_link=venue.facebook_link,
+    website_link=venue.website_link,
+    image_link=venue.image_link,
+    seeking_talent=venue.seeking_talent,
+    seeking_description=venue.seeking_description
+  )
   return render_template('forms/edit_venue.html', form=form, venue=venue)
 
 @app.route('/venues/<int:venue_id>/edit', methods=['POST'])
@@ -405,7 +429,6 @@ def create_artist_submission():
       seeking_venues=True if seeking_venue=='y' else False,
       seeking_description=seeking_description
     )
-    print("its working now:{}".format(artist.seeking_venues))
     db.session.add(artist)
     db.session.commit()
     # on successful db insert, flash success
